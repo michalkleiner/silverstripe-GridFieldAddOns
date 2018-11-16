@@ -1,5 +1,12 @@
 <?php
 
+namespace SilverStripe\GridFieldAddOns;
+
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridField_ColumnProvider;
+
+
 class GridFieldRecordHighlighter implements GridField_ColumnProvider {
 
 	protected $alerts;

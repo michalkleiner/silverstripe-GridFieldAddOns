@@ -1,5 +1,7 @@
 <?php
 
+namespace SilverStripe\GridFieldAddOns;
+
 class GridFieldUserColumnsExtension extends DataExtension {
 
 	static $db = array(

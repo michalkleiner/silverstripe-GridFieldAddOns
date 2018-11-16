@@ -1,5 +1,17 @@
 <?php
 
+namespace SilverStripe\GridFieldAddOns;
+
+use SilverStripe\Core\Convert;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\View\Requirements;
+use SilverStripe\ORM\ValidationException;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridField_URLHandler;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridField_ColumnProvider;
+
 class GridFieldEditableCells implements GridField_ColumnProvider, GridField_URLHandler {
 
 	protected $fields;
@@ -23,7 +35,7 @@ class GridFieldEditableCells implements GridField_ColumnProvider, GridField_URLH
 
 		// remove columns handled by GridFieldEditableCells from GridFieldDataColumns
 		// @FIXME: if _all_ columns get removed from GridFieldDataColumns infact none gets removed
-		$datacolumnscomponent = $gridField->getConfig()->getComponentByType('GridFieldDataColumns');
+		$datacolumnscomponent = $gridField->getConfig()->getComponentByType(GridFieldDataColumns::class);
 		$datacolumns = $datacolumnscomponent->getDisplayFields($gridField);
 		$datacolumns = array_diff($datacolumns, $this->columns);
 		$datacolumnscomponent->setDisplayFields($datacolumns);

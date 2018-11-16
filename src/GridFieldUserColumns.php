@@ -1,5 +1,9 @@
 <?php
 
+namespace SilverStripe\GridFieldAddOns;
+
+use SilverStripe\GridFieldAddOns\GridFieldUserColumns;
+
 class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvider, GridField_HTMLProvider, GridField_URLHandler {
 
 	static $static_field_for_extra_columns = 'extra_summary_fields';
@@ -49,7 +53,7 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 		if(!$this->gridField) throw new Exception('GridField not yet set. Do not call GridFieldUserColumns::userColumns() before GridFieldUserColumns::augmentColumns().');
 
 		if(
-			Member::currentUser()->hasField('GridFieldUserColumns') &&
+			Member::currentUser()->hasField(GridFieldUserColumns::class) &&
 			Member::currentUser()->GridFieldUserColumns &&
 			($usercolumns = Member::currentUser()->getGridFieldUserColumnsFor($this->gridField->getList()->dataClass()))
 		) {

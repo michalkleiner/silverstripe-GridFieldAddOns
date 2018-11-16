@@ -1,6 +1,6 @@
 {
 	"name":"silverstripe/gridfield-addons",
-	"type": "silverstripe-module",
+	"type": "silverstripe-vendormodule",
 	"description": "GridFieldAddOns is a collection of plugins for the Silverstripe GridField.",
 	"keywords": ["silverstripe", "gridfield", "component"],
 	"license": "BSD-3-Clause",
@@ -12,13 +12,20 @@
 		"role" : "freelance developer"
 	}],
 	"require":  {
-		"php": ">=5.3.2",
-		"silverstripe/framework": ">=3.0.1"
+		"php": ">=5.6",
+		"silverstripe/framework": "^4.0"
 	},
 	"extra": {
-		"installer-path": "gridfield-addons",
-		"snapshot" : "https://raw.github.com/smindel/silverstripe-GridFieldAddOns/master/docs/en/_images/GridFieldEditableCells1.png"
+        "expose": [
+            "css",
+            "javascript"
+        ]
 	},
+	"autoload": {
+        "psr-4": {
+            "SilverStripe\\GridFieldAddOns\\": "src"
+        }
+    },
 	"support": {
 		"issues": "https://github.com/smindel/silverstripe-GridFieldAddOns/issues?state=open"
 	}

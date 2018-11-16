@@ -1,8 +1,26 @@
 <?php
 
+namespace SilverStripe\GridFieldAddOns;
+
+use Object;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\View\Requirements;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\RequestHandler;
+use SilverStripe\ORM\ValidationException;
+use SilverStripe\Control\PjaxResponseNegotiator;
+use SilverStripe\Forms\GridField\GridField_URLHandler;
+use SilverStripe\Forms\GridField\GridField_HTMLProvider;
+use SilverStripe\GridFieldAddOns\GridFieldExpandableForm;
+use SilverStripe\GridFieldAddOns\GridFieldExpandableForm_ItemRequest;
+
+
+
 class GridFieldExpandableForm implements GridField_URLHandler, GridField_HTMLProvider {
 
-	public $template = 'GridFieldExpandableForm';
+	public $template = GridFieldExpandableForm::class;
 	public $formorfields;
 
 	function __construct($formorfields = null) {
@@ -22,9 +40,9 @@ class GridFieldExpandableForm implements GridField_URLHandler, GridField_HTMLPro
 
 		$record = $gridField->getList()->byId($request->param("ID"));
 
-		$handler = Object::create('GridFieldExpandableForm_ItemRequest', $gridField, $this, $record, $controller, 'DetailForm', $this->formorfields);
+		$handler = Object::create(GridFieldExpandableForm_ItemRequest::class, $gridField, $this, $record, $controller, 'DetailForm', $this->formorfields);
 
-		return $handler->handleRequest($request, DataModel::inst());
+		return $handler->handleRequest($request);
 	}
 
 	public function getHTMLFragments($gridField) {
@@ -58,7 +76,7 @@ class GridFieldExpandableForm_ItemRequest extends RequestHandler {
 	protected $controller;
 	protected $name;
 	protected $formorfields;
-	protected $template = 'GridFieldExpandableForm';
+	protected $template = GridFieldExpandableForm::class;
 
 	public function __construct($gridfield, $component, $record, $controller, $name, $formorfields) {
 		$this->gridfield = $gridfield;
