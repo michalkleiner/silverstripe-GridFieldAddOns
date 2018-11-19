@@ -3,9 +3,9 @@
 
 <ul>
 <% loop $Columns %>
-	<li>
-		<input type="checkbox" name="columns[{$Name}]" id="columns[{$Name}]" value="{$Name}:{$Title}"<% if $Selected %> checked="checked"<% end_if %>>
+	<li class="font-icon-drag-handle">
 		<label for="columns[{$Name}]">$Title</label>
+		<input type="checkbox" name="columns[{$Name}]" id="columns[{$Name}]" value="{$Name}:{$Title}"<% if $Selected %> checked="checked"<% end_if %>>
 	</li>
 <% end_loop %>
 </ul>

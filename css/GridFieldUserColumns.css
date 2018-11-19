@@ -1,6 +1,12 @@
 #GridFieldUserColumnsDialog {
 	padding:20px;
 }
+#GridFieldUserColumnsDialog .ui-sortable {
+	padding: 0;
+}
+#GridFieldUserColumnsDialog .ui-sortable li {
+	list-style: none;
+}
 
 #GridFieldUserColumnsDialog h1 {
 	font-size:1.5em;

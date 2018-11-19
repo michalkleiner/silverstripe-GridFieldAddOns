@@ -43,6 +43,7 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 		$this->init($gridField);
 
 		Requirements::javascript('silverstripe/gridfield-addons:javascript/GridFieldUserColumns.js');
+		Requirements::css('silverstripe/gridfield-addons:css/GridFieldUserColumns.css');
 
 		$usercolumns = $this->currentColumns();
 		$extracolumns = array_diff($columns, $this->availableColumns());
@@ -126,7 +127,7 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 		$buttonlabel = _t('GridFieldAddOns.ChangeColumns',"Change Columns");
 
 		return array(
-			'buttons-before-right' => "<a class=\"action action ss-ui-button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary gridfield-setup\" data-icon=\"settings\">$buttonlabel</a>",
+			'buttons-before-right' => "<a class=\"action btn h-100 btn-outline-secondary action gridfield-setup\" data-icon=\"settings\">$buttonlabel</a>",
 		);
 	}
 
