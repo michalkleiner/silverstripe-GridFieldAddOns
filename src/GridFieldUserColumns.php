@@ -2,9 +2,22 @@
 
 namespace SilverStripe\GridFieldAddOns;
 
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\View\ArrayData;
+use SilverStripe\Security\Member;
+use SilverStripe\View\Requirements;
+use SilverStripe\View\ViewableData;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\ORM\ValidationException;
+use SilverStripe\Forms\GridField\GridField_URLHandler;
 use SilverStripe\GridFieldAddOns\GridFieldUserColumns;
+use SilverStripe\Forms\GridField\GridField_HTMLProvider;
+use SilverStripe\Forms\GridField\GridField_ColumnProvider;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 
-class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvider, GridField_HTMLProvider, GridField_URLHandler {
+class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvider, GridField_HTMLProvider, GridField_URLHandler 
+{
 
 	static $static_field_for_extra_columns = 'extra_summary_fields';
 
@@ -40,7 +53,7 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 	function defaultColumns() {
 
 		if(!$this->default_columns) {
-			if(!$this->gridField) throw new Exception('GridField not yet set. Do not call GridFieldUserColumns::defaultColumns() before GridFieldUserColumns::augmentColumns().');
+			if(!$this->gridField) throw new ValidationException('GridField not yet set. Do not call GridFieldUserColumns::defaultColumns() before GridFieldUserColumns::augmentColumns().');
 			$datacolumnscomponent = $this->gridField->getConfig()->getComponentByType('GridFieldDataColumns');
 			$this->default_columns = $datacolumnscomponent->getDisplayFields($this->gridField);
 		}
@@ -50,7 +63,7 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 
 	function userColumns() {
 
-		if(!$this->gridField) throw new Exception('GridField not yet set. Do not call GridFieldUserColumns::userColumns() before GridFieldUserColumns::augmentColumns().');
+		if(!$this->gridField) throw new ValidationException('GridField not yet set. Do not call GridFieldUserColumns::userColumns() before GridFieldUserColumns::augmentColumns().');
 
 		if(
 			Member::currentUser()->hasField(GridFieldUserColumns::class) &&
@@ -69,7 +82,7 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 
 	function availableColumns() {
 
-		if(!$this->gridField) throw new Exception('GridField not yet set. Do not call GridFieldUserColumns::userColumns() before GridFieldUserColumns::augmentColumns().');
+		if(!$this->gridField) throw new ValidationException('GridField not yet set. Do not call GridFieldUserColumns::userColumns() before GridFieldUserColumns::augmentColumns().');
 
 		$class = $this->gridField->getList()->dataClass();
 		$default = $this->defaultColumns();
