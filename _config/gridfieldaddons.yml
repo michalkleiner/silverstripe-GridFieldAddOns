@@ -1,14 +1,3 @@
 ---
 name: gridfieldaddons
 ---
-SilverStripe\Admin\LeftAndMain:
-  extra_requirements_javascript:
-    - silverstripe/gridfieldaddons:javascript/GridFieldExpandableForm.js
-    - silverstripe/gridfieldaddons:javascript/GridFieldEditableCells.js
-    - silverstripe/gridfieldaddons:javascript/GridFieldRecordHighlighter.js
-    - silverstripe/gridfieldaddons:javascript/GridFieldUserColumns.js	
-  extra_requirements_css:
-    - silverstripe/gridfieldaddons:javascript/GridFieldExpandableForm.css
-    - silverstripe/gridfieldaddons:javascript/GridFieldEditableCells.css
-    - silverstripe/gridfieldaddons:javascript/GridFieldRecordHighlighter.css
-    - silverstripe/gridfieldaddons:javascript/GridFieldUserColumns.css

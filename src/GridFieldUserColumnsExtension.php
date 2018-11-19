@@ -6,9 +6,9 @@ use SilverStripe\ORM\DataExtension;
 
 class GridFieldUserColumnsExtension extends DataExtension {
 
-	static $db = array(
-		'GridFieldUserColumns' => 'Text',
-	);
+	private static $db = [
+		'GridFieldUserColumns' => 'Text'
+	];
 
 	function getGridFieldUserColumnsFor($gridfielddataclass) {
 		if(!$this->owner->GridFieldUserColumns) return false;
