@@ -12,7 +12,6 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\ORM\ValidationException;
 use SilverStripe\Forms\GridField\GridField_URLHandler;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
-use SilverStripe\GridFieldAddOns\GridFieldUserColumns;
 use SilverStripe\Forms\GridField\GridField_HTMLProvider;
 use SilverStripe\Forms\GridField\GridField_ColumnProvider;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
@@ -170,21 +169,5 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 		}
 		Security::getCurrentUser()->setGridFieldUserColumnsFor($gridField->getList()->dataClass(), $newcolumns);
 		return json_encode('good');
-	}
-}
-
-class GridFieldConfig_ExtendedRecordEditor extends GridFieldConfig_RecordEditor {
-
-	function __construct($itemsPerPage = null) {
-		parent::__construct($itemsPerPage);
-		$this->addComponent(new GridFieldUserColumns());
-	}
-}
-
-class GridFieldConfig_ExtendedRelationEditor extends GridFieldConfig_RelationEditor {
-
-	function __construct($itemsPerPage = null) {
-		parent::__construct($itemsPerPage);
-		$this->addComponent(new GridFieldUserColumns());
 	}
 }
