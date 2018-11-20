@@ -1,5 +1,7 @@
 # GridFieldAddOns
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/i-lateral/silverstripe-GridFieldAddOns/badges/quality-score.png?b=2)](https://scrutinizer-ci.com/g/i-lateral/silverstripe-GridFieldAddOns/?branch=2)
+
 ## Introduction
 
 GridFieldAddOns is a collection of plugins for the Silverstripe GridField.
