@@ -16,42 +16,45 @@ use SilverStripe\Forms\GridField\GridField_HTMLProvider;
 use SilverStripe\GridFieldAddOns\GridFieldExpandableForm;
 use SilverStripe\GridFieldAddOns\GridFieldExpandableForm_ItemRequest;
 
-class GridFieldExpandableForm implements GridField_URLHandler, GridField_HTMLProvider {
+class GridFieldExpandableForm implements GridField_URLHandler, GridField_HTMLProvider
+{
 
-	public $template = GridFieldExpandableForm::class;
-	public $formorfields;
+    public $template = GridFieldExpandableForm::class;
+    public $formorfields;
 
-	function __construct($formorfields = null) {
+    function __construct($formorfields = null)
+    {
 
-		$this->formorfields = $formorfields;
-	}
+        $this->formorfields = $formorfields;
+    }
 
-	public function getURLHandlers($gridField) {
-		return array(
-			'expand/$ID' => 'handleItem',
-		);
-	}
+    public function getURLHandlers($gridField)
+    {
+        return array(
+            'expand/$ID' => 'handleItem',
+        );
+    }
 
-	public function handleItem($gridField, $request) {
+    public function handleItem($gridField, $request)
+    {
 
-		$controller = $gridField->getForm()->getController();
+        $controller = $gridField->getForm()->getController();
 
-		$record = $gridField->getList()->byId($request->param("ID"));
+        $record = $gridField->getList()->byId($request->param("ID"));
 
-		$handler = Injector::inst()->create(GridFieldExpandableForm_ItemRequest::class, $gridField, $this, $record, $controller, 'DetailForm', $this->formorfields);
+        $handler = Injector::inst()->create(GridFieldExpandableForm_ItemRequest::class, $gridField, $this, $record, $controller, 'DetailForm', $this->formorfields);
 
-		return $handler->handleRequest($request);
-	}
+        return $handler->handleRequest($request);
+    }
 
-	public function getHTMLFragments($gridField) 
-	{
-		Requirements::javascript('silverstripe/gridfield-addons:/javascript/GridFieldExpandableForm.js');
-		Requirements::css('silverstripe/gridfield-addons:/css/GridFieldExpandableForm.css');
+    public function getHTMLFragments($gridField)
+    {
+        Requirements::javascript('silverstripe/gridfield-addons:/javascript/GridFieldExpandableForm.js');
+        Requirements::css('silverstripe/gridfield-addons:/css/GridFieldExpandableForm.css');
 
-		$gridField->addExtraClass('expandable-forms');
-		$gridField->setAttribute('data-pseudo-form-url', $gridField->Link('expand'));
+        $gridField->addExtraClass('expandable-forms');
+        $gridField->setAttribute('data-pseudo-form-url', $gridField->Link('expand'));
 
-		return array();
-	}
-
+        return array();
+    }
 }
