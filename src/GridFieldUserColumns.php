@@ -99,10 +99,48 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
         $class = $this->gridField->getList()->dataClass();
         $default = $this->defaultColumns();
         $user = $this->userColumns();
-        $extra = Config::inst()->get($class, self::$static_field_for_extra_columns);
+        $extra_cols = Config::inst()->get($class, self::$static_field_for_extra_columns);
+        $extra = $this->addFieldLabels($extra_cols);
+
         $default = is_array($extra) ? array_merge($default, $extra) : $default;
 
         return is_array($user) ? array_merge($user, $default) : $default;
+    }
+
+    /**
+     * Look for and add any needed field labels (used mostly for extra_summary_fields)
+     * and return new array
+     * 
+     * @return array
+     */
+    protected function addFieldLabels($fields)
+    {
+        $class = $this->gridField->getList()->dataClass();
+        $obj = $class::singleton();
+
+        // Merge associative / numeric keys
+        $return = [];
+        foreach ($fields as $key => $value) {
+            if (is_int($key)) {
+                $key = $value;
+            }
+            $return[$key] = $value;
+        }
+
+        if (!$return) {
+            $return = array();
+        }
+
+        // Localize fields (if possible)
+        foreach ($obj->fieldLabels(false) as $name => $label) {
+            // only attempt to localize if the label definition is the same as the field name.
+            // this will preserve any custom labels set in the summary_fields configuration
+            if (isset($return[$name]) && $name === $return[$name]) {
+                $return[$name] = $label;
+            }
+        }
+
+        return $return;
     }
 
     // since we're not really provide columns we're not returning anything
