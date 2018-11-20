@@ -1,45 +1,15 @@
 <?php
 
-class GridFieldExpandableForm implements GridField_URLHandler, GridField_HTMLProvider {
+namespace SilverStripe\GridFieldAddOns;
 
-	public $template = 'GridFieldExpandableForm';
-	public $formorfields;
-
-	function __construct($formorfields = null) {
-
-		$this->formorfields = $formorfields;
-	}
-
-	public function getURLHandlers($gridField) {
-		return array(
-			'expand/$ID' => 'handleItem',
-		);
-	}
-
-	public function handleItem($gridField, $request) {
-
-		$controller = $gridField->getForm()->Controller();
-
-		$record = $gridField->getList()->byId($request->param("ID"));
-
-		$handler = Object::create('GridFieldExpandableForm_ItemRequest', $gridField, $this, $record, $controller, 'DetailForm', $this->formorfields);
-
-		return $handler->handleRequest($request, DataModel::inst());
-	}
-
-	public function getHTMLFragments($gridField) {
-
-		Requirements::javascript(FRAMEWORK_DIR . '/thirdparty/jquery-ui/jquery-ui.js');
-		Requirements::javascript(GRIDFIELD_ADDONS_DIR . '/javascript/GridFieldExpandableForm.js');
-		Requirements::css(GRIDFIELD_ADDONS_DIR .'/css/GridFieldExpandableForm.css');
-
-		$gridField->addExtraClass('expandable-forms');
-		$gridField->setAttribute('data-pseudo-form-url', $gridField->Link('expand'));
-
-		return array();
-	}
-
-}
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\RequestHandler;
+use SilverStripe\ORM\ValidationException;
+use SilverStripe\Control\PjaxResponseNegotiator;
+use SilverStripe\GridFieldAddOns\GridFieldExpandableForm;
 
 class GridFieldExpandableForm_ItemRequest extends RequestHandler {
 
@@ -49,7 +19,8 @@ class GridFieldExpandableForm_ItemRequest extends RequestHandler {
 	);
 
 	private static $allowed_actions = array(
-		'edit'
+		'edit',
+		'ExpandableForm'
 	);
 
 	protected $gridfield;
@@ -58,7 +29,7 @@ class GridFieldExpandableForm_ItemRequest extends RequestHandler {
 	protected $controller;
 	protected $name;
 	protected $formorfields;
-	protected $template = 'GridFieldExpandableForm';
+	protected $template = GridFieldExpandableForm::class;
 
 	public function __construct($gridfield, $component, $record, $controller, $name, $formorfields) {
 		$this->gridfield = $gridfield;

@@ -1,13 +1,32 @@
 <?php
 
-class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvider, GridField_HTMLProvider, GridField_URLHandler {
+namespace SilverStripe\GridFieldAddOns;
+
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\View\ArrayData;
+use SilverStripe\Security\Member;
+use SilverStripe\Security\Security;
+use SilverStripe\View\Requirements;
+use SilverStripe\View\ViewableData;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\ORM\ValidationException;
+use SilverStripe\Forms\GridField\GridField_URLHandler;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridField_HTMLProvider;
+use SilverStripe\Forms\GridField\GridField_ColumnProvider;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
+
+class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvider, GridField_HTMLProvider, GridField_URLHandler 
+{
 
 	static $static_field_for_extra_columns = 'extra_summary_fields';
 
 	protected $gridField;
 	protected $default_columns;
 
-	function init($gridField) {
+	function init($gridField) 
+	{
 		$this->gridField = $gridField;
 	}
 
@@ -17,55 +36,60 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 	 * @param GridField $gridField
 	 * @param array - List reference of all column names.
 	 */
-	public function augmentColumns($gridField, &$columns) {
+	public function augmentColumns($gridField, &$columns) 
+	{
 
 		$this->init($gridField);
 
-		Requirements::javascript(GRIDFIELD_ADDONS_DIR. '/javascript/GridFieldUserColumns.js');
+		Requirements::javascript('silverstripe/gridfield-addons:javascript/GridFieldUserColumns.js');
+		Requirements::css('silverstripe/gridfield-addons:css/GridFieldUserColumns.css');
 
 		$usercolumns = $this->currentColumns();
 		$extracolumns = array_diff($columns, $this->availableColumns());
 		$displaycolumns = array_values(array_unique(array_merge(array_keys($usercolumns), $extracolumns)));
 
-		$datacolumnscomponent = $gridField->getConfig()->getComponentByType('GridFieldDataColumns');
+		$datacolumnscomponent = $gridField->getConfig()->getComponentByType(GridFieldDataColumns::class);
 		$datacolumnscomponent->setDisplayFields($usercolumns);
 
 		$columns = $displaycolumns;
 	}
 
-	function defaultColumns() {
+	function defaultColumns() 
+	{
 
 		if(!$this->default_columns) {
-			if(!$this->gridField) throw new Exception('GridField not yet set. Do not call GridFieldUserColumns::defaultColumns() before GridFieldUserColumns::augmentColumns().');
-			$datacolumnscomponent = $this->gridField->getConfig()->getComponentByType('GridFieldDataColumns');
+			if(!$this->gridField) throw new ValidationException('GridField not yet set. Do not call GridFieldUserColumns::defaultColumns() before GridFieldUserColumns::augmentColumns().');
+			$datacolumnscomponent = $this->gridField->getConfig()->getComponentByType(GridFieldDataColumns::class);
 			$this->default_columns = $datacolumnscomponent->getDisplayFields($this->gridField);
 		}
 
 		return $this->default_columns;
 	}
 
-	function userColumns() {
+	function userColumns() 
+	{
 
-		if(!$this->gridField) throw new Exception('GridField not yet set. Do not call GridFieldUserColumns::userColumns() before GridFieldUserColumns::augmentColumns().');
-
+		if(!$this->gridField) throw new ValidationException('GridField not yet set. Do not call GridFieldUserColumns::userColumns() before GridFieldUserColumns::augmentColumns().');
+		$member = Security::getCurrentUser();
 		if(
-			Member::currentUser()->hasField('GridFieldUserColumns') &&
-			Member::currentUser()->GridFieldUserColumns &&
-			($usercolumns = Member::currentUser()->getGridFieldUserColumnsFor($this->gridField->getList()->dataClass()))
+			$member->hasField('GridFieldUserColumns') &&
+			$member->GridFieldUserColumns &&
+			($usercolumns = $member->getGridFieldUserColumnsFor($this->gridField->getList()->dataClass()))
 		) {
 			return $usercolumns;
 		}
 		return false;
 	}
 
-	function currentColumns() {
+	function currentColumns() 
+	{
 		$user = $this->userColumns();
 		return is_array($user) ? $user : $this->defaultColumns();
 	}
 
-	function availableColumns() {
-
-		if(!$this->gridField) throw new Exception('GridField not yet set. Do not call GridFieldUserColumns::userColumns() before GridFieldUserColumns::augmentColumns().');
+	function availableColumns() 
+	{
+		if(!$this->gridField) throw new ValidationException('GridField not yet set. Do not call GridFieldUserColumns::userColumns() before GridFieldUserColumns::augmentColumns().');
 
 		$class = $this->gridField->getList()->dataClass();
 		$default = $this->defaultColumns();
@@ -102,7 +126,7 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 		$buttonlabel = _t('GridFieldAddOns.ChangeColumns',"Change Columns");
 
 		return array(
-			'buttons-before-right' => "<a class=\"action action ss-ui-button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary gridfield-setup\" data-icon=\"settings\">$buttonlabel</a>",
+			'buttons-before-right' => "<a class=\"action btn h-100 btn-outline-secondary action gridfield-setup\" data-icon=\"settings\">$buttonlabel</a>",
 		);
 	}
 
@@ -115,7 +139,9 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 
 	function UserColumnsForm($gridField, $request) {
 		$this->init($gridField);
-		return $this->renderWith('GridFieldUserColumns_Form');
+		return $this->renderWith(
+			self::class.'_Form'
+		);
 	}
 
 	function Columns() {
@@ -141,23 +167,7 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
 			if(!isset($available[$name]) || $available[$name] != $title) return json_encode(array('bad', $this->gridField->getList()->dataClass()));
 			$newcolumns[$name] = $title;
 		}
-		Member::currentUser()->setGridFieldUserColumnsFor($gridField->getList()->dataClass(), $newcolumns);
+		Security::getCurrentUser()->setGridFieldUserColumnsFor($gridField->getList()->dataClass(), $newcolumns);
 		return json_encode('good');
-	}
-}
-
-class GridFieldConfig_ExtendedRecordEditor extends GridFieldConfig_RecordEditor {
-
-	function __construct($itemsPerPage = null) {
-		parent::__construct($itemsPerPage);
-		$this->addComponent(new GridFieldUserColumns());
-	}
-}
-
-class GridFieldConfig_ExtendedRelationEditor extends GridFieldConfig_RelationEditor {
-
-	function __construct($itemsPerPage = null) {
-		parent::__construct($itemsPerPage);
-		$this->addComponent(new GridFieldUserColumns());
 	}
 }
