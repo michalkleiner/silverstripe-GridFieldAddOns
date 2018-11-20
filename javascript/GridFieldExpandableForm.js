@@ -2,7 +2,7 @@
 
 	$.entwine('ss', function($) {
 
-		$('.expandable-forms .ss-gridfield-item td').entwine({
+		$('.expandable-forms .ss-gridfield-item td:not(.col-bulkSelect)').entwine({
 			onclick: function() {
 				return false;
 			}
@@ -70,10 +70,9 @@
 			}
 		});
 
-		$('.cms-edit-form .ss-gridfield.expandable-forms .EditFormContainer .Actions input.action[type=submit], .cms-edit-form .ss-gridfield .EditFormContainer .Actions button.action').entwine({
+		$('.cms-edit-form .ss-gridfield.expandable-forms .EditFormContainer input.action[type=submit], .cms-edit-form .ss-gridfield .EditFormContainer button.action').entwine({
 		
 			onclick: function() {
-
 				var gridfield = $(this).getGridField();
 					
 				var container = $(this).closest('.EditFormContainer');

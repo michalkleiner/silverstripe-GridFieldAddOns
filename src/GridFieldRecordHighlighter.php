@@ -1,5 +1,13 @@
 <?php
 
+namespace SilverStripe\GridFieldAddOns;
+
+use SilverStripe\Core\Convert;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridField_ColumnProvider;
+
+
 class GridFieldRecordHighlighter implements GridField_ColumnProvider {
 
 	protected $alerts;
@@ -52,13 +60,22 @@ class GridFieldRecordHighlighter implements GridField_ColumnProvider {
 	 */
 	public function getColumnContent($gridField, $record, $columnName) {
 
-		Requirements::javascript(GRIDFIELD_ADDONS_DIR . '/javascript/GridFieldRecordHighlighter.js');
-		Requirements::css(GRIDFIELD_ADDONS_DIR. '/css/GridFieldRecordHighlighter.css');
+		Requirements::javascript('silverstripe/gridfield-addons:javascript/GridFieldRecordHighlighter.js');
+		Requirements::css('silverstripe/gridfield-addons:css/GridFieldRecordHighlighter.css');
 
 		$alerts = $this->getAlerts($record);
 
 		$content = array();
-		foreach($alerts as $alert) $content[] = "<span class=\"ss-gridfield-alert ui-icon ui-icon-{$alert['status']}\" title=\"{$alert['message']}\"></span>";
+		foreach($alerts as $alert) {
+			if ($alert['status'] === 'alert') {
+				$icon_class = "font-icon-attention";
+			} else if ($alert['status'] == 'info') {
+				$icon_class = "font-icon-info-circled";
+			} else {
+				$icon_class = null;
+			}
+			$content[] = "<span class=\"ss-gridfield-alert {$icon_class}\" title=\"{$alert['message']}\"></span>";
+		}
 		
 		return implode($content);
 	}

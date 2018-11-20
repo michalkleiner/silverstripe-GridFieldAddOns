@@ -1,26 +1,45 @@
 {
 	"name":"i-lateral/silverstripe-gridfield-addons",
-	"type": "silverstripe-module",
+	"type": "silverstripe-vendormodule",
 	"description": "GridFieldAddOns is a collection of plugins for the Silverstripe GridField.",
 	"keywords": ["silverstripe", "gridfield", "component"],
 	"license": "BSD-3-Clause",
 	"homepage": "https://github.com/i-lateral/silverstripe-GridFieldAddOns",
 	"authors":[
 		{
-		"name": "Andreas Piening",
-		"homepage": "https://github.com/smindel/",
-		"email" : "piening@3online.de",
-		"role" : "freelance developer"
+			"name": "Andreas Piening",
+			"homepage": "https://github.com/smindel/",
+			"email" : "piening@3online.de",
+			"role" : "freelance developer"
+		},
+		{
+			"name": "Mark Anderson",
+			"homepage": "https://github.com/Makreig",
+			"email" : "mark@ilateral.co.uk",
+			"role" : "developer"
+		},
+		{
+			"name": "Morven Lewis-Everley",
+			"homepage": "https://github.com/mlewis-everley",
+			"email" : "morven@ilateral.co.uk",
+			"role" : "developer"
 		}
 	],
 	"require":  {
-		"php": ">=5.3.2",
-		"silverstripe/framework": ">=3.0.1"
+		"php": ">=5.6",
+		"silverstripe/framework": "^4.0"
 	},
 	"extra": {
-		"installer-path": "gridfield-addons",
-		"snapshot" : "https://raw.github.com/i-lateral/silverstripe-GridFieldAddOns/master/docs/en/_images/GridFieldEditableCells1.png"
+        "expose": [
+            "css",
+            "javascript"
+        ]
 	},
+	"autoload": {
+        "psr-4": {
+            "SilverStripe\\GridFieldAddOns\\": "src"
+        }
+    },
 	"support": {
 		"issues": "https://github.com/i-lateral/silverstripe-GridFieldAddOns/issues?state=open"
 	}
