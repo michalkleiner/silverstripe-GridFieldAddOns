@@ -10,6 +10,10 @@ First 'stable' release for SS3
 
 Minor update to add additional module files
 
+## 1.0.2
+
+Added better support for bulk selection (via bulk editing module)
+
 ## 2.0.0
 
 First 'stable' SS4 version
