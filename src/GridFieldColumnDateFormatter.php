@@ -58,6 +58,9 @@ class GridFieldColumnDateFormatter implements GridField_ColumnProvider
         $db = Config::inst()->get($grid_field->getModelClass(), "db");
         $fields = $this->findDateFields();
 
+        // Does the current grid have an action column?
+        $has_actions = in_array('Actions', $columns);
+
         // First setup columns
         foreach ($config->getComponents() as $component) {
             $is_header = ($component instanceof GridFieldSortableHeader);
@@ -66,6 +69,7 @@ class GridFieldColumnDateFormatter implements GridField_ColumnProvider
             // If we are working with a set of data columns, look for
             // date/datetime columns
             if ($is_columns && method_exists($component, "getDisplayFields")) {
+                
                 $display_fields = $component->getDisplayFields($grid_field);
                 foreach ($fields as $field) {
                     $display_fields = $this->changeKeys(
@@ -76,6 +80,11 @@ class GridFieldColumnDateFormatter implements GridField_ColumnProvider
                 }
                 $component->setDisplayFields($display_fields);
                 $columns = array_keys($display_fields);
+
+                // Ensure actions are added back in (if unset)
+                if ($has_actions && !in_array('Actions', $columns)) {
+                    $columns[] = 'Actions';
+                }
             }
 
             // If we are working with sortable headers, look for
