@@ -8,11 +8,14 @@ GridFieldAddOns is a collection of plugins for the Silverstripe GridField.
 
 Currently there are 3 components:
 
-- *[GridFieldExpandableForm](http://github.com/smindel/silverstripe-GridFieldAddOns/blob/master/docs/en/GridFieldExpandableForm.md)*
+- *[GridFieldExpandableForm](docs/en/GridFieldExpandableForm.md)*
 	GridFieldExpandableForm is a GridField component to display a form for a GridField item like GridFieldDetailForm does, but within the GridField. It expands the item in the fashion of a jQueryUI accordion effect instead of opening the form in the main part of the UI.
-- *[GridFieldRecordHighlighter](http://github.com/smindel/silverstripe-GridFieldAddOns/blob/master/docs/en/GridFieldRecordHighlighter.md)*
+- *[GridFieldRecordHighlighter](docs/en/GridFieldRecordHighlighter.md)*
 	GridFieldRecordHighlighter highlights records in a GridField.
-- *[GridFieldUserColumns](http://github.com/smindel/silverstripe-GridFieldAddOns/blob/master/docs/en/GridFieldUserColumns.md)*
+- *[GridFieldUserColumns](docs/en/GridFieldUserColumns.md)*
+	GridFieldUserColumns gives users control over the columns of the GridField.
+
+- *[GridFieldColumnDateFormatter](docs/en/GridFieldColumnDateFormatter.md)*
 	GridFieldUserColumns gives users control over the columns of the GridField.
 
 Although I am using all the components in production they are rather in a beta stage. You helping me fixing bugs or improving the module is appreciated.
