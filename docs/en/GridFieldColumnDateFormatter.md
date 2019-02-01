@@ -2,13 +2,11 @@
 
 GridFieldColumnDateFormatter reformats the parent GridField columns so that
 any Date/DateTime fields are formatted in the chosen format (default is 
-`DBDate::Nice()`) while retaining sorting.
+`Date::Nice()`) while retaining sorting.
 
 ## Code Example
 
 Just add the component to your `GridField` as you would any other:
-
-    use SilverStripe\GridFieldAddOns\GridFieldColumnDateFormatter;
 
 	$grid_field->getConfig()->addComponent(new GridFieldColumnDateFormatter());
 

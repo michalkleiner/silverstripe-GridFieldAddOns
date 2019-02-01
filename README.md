@@ -29,4 +29,6 @@ Please follow the [standard module installation documentation](http://doc.silver
 
 ## Maintainers
 
-Andreas Piening <piening at 3online dot de>
+* Andreas Piening <piening at 3online dot de>
+* Mark Anderson <mark at ilateral dot co dot uk>
+* Morven Lewis-Everley <morven at ilateral dot co dot uk>
