@@ -16,7 +16,7 @@ Currently there are 3 components:
 	GridFieldUserColumns gives users control over the columns of the GridField.
 - *[GridFieldColumnDateFormatter](docs/en/GridFieldColumnDateFormatter.md)*
 	Allows you to re-format any dates on the GridField column provider while retaining sorting.
-- *[GridfieldCustomDetailForm](docs/en/GridfieldCustomDetailForm.md)*
+- *[GridfieldCustomDetailForm](docs/en/GridFieldCustomDetailForm.md)*
 	Allows you to define custom `GridFieldDetailForm_ItemRequest` for your `DataObject` via config.
 
 ## Requirements
