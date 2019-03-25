@@ -14,11 +14,10 @@ Currently there are 3 components:
 	GridFieldRecordHighlighter highlights records in a GridField.
 - *[GridFieldUserColumns](docs/en/GridFieldUserColumns.md)*
 	GridFieldUserColumns gives users control over the columns of the GridField.
-
 - *[GridFieldColumnDateFormatter](docs/en/GridFieldColumnDateFormatter.md)*
-	GridFieldUserColumns gives users control over the columns of the GridField.
-
-Although I am using all the components in production they are rather in a beta stage. You helping me fixing bugs or improving the module is appreciated.
+	Allows you to re-format any dates on the GridField column provider while retaining sorting.
+- *[GridfieldCustomDetailForm](docs/en/GridfieldCustomDetailForm.md)*
+	Allows you to define custom `GridFieldDetailForm_ItemRequest` for your `DataObject` via config.
 
 ## Requirements
 
