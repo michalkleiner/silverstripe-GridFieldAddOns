@@ -75,7 +75,7 @@ class GridFieldExpandableForm_ItemRequest extends RequestHandler
             $actions = new FieldList();
             $actions->push(FormAction::create('doSave', _t('GridFieldDetailForm.Save', 'Save'))
                 ->setUseButtonTag(true)
-                ->addExtraClass('ss-ui-action-constructive')
+                ->addExtraClass('ss-ui-action-constructive btn-primary mx-auto btn-lg')
                 ->setAttribute('data-icon', 'accept')
                 ->setAttribute('data-action-type', 'default'));
 
