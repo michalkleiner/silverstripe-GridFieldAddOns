@@ -17,3 +17,11 @@ Added better support for bulk selection (via bulk editing module)
 ## 2.0.0
 
 First 'stable' SS4 version
+
+## 2.0.1
+
+Updated styling of save button on expandable form
+
+## 2.0.2
+
+Ensure that record permissions are honorted on editing and saving via expandable form 

@@ -45,16 +45,26 @@ class GridFieldExpandableForm_ItemRequest extends RequestHandler
 
     public function edit($request)
     {
-        $controller = $this->getToplevelController();
         $form = $this->ExpandableForm($this->gridField, $request);
 
-        return $this->customise(array(
-            'ExpandableForm' => $form,
-        ))->renderWith($this->template);
+        return $this
+            ->customise(['ExpandableForm' => $form])
+            ->renderWith($this->template);
     }
 
+    /**
+     * Generate a form to allow editing of a reord
+     *
+     * @return \SilverStripe\Forms\Form
+     */
     public function ExpandableForm()
     {
+        $record = $this->record;
+
+        if (!$record->canView()) {
+            $controller = $this->getToplevelController();
+            return $controller->httpError(403);
+        }
 
         if ($this->formorfields instanceof FieldList) {
             $fields = $this->formorfields;
@@ -73,11 +83,13 @@ class GridFieldExpandableForm_ItemRequest extends RequestHandler
 
         if (empty($form)) {
             $actions = new FieldList();
-            $actions->push(FormAction::create('doSave', _t('GridFieldDetailForm.Save', 'Save'))
-                ->setUseButtonTag(true)
-                ->addExtraClass('ss-ui-action-constructive btn-primary font-icon-save')
-                ->setAttribute('data-icon', 'accept')
-                ->setAttribute('data-action-type', 'default'));
+            $actions->push(
+                FormAction::create('doSave', _t('GridFieldDetailForm.Save', 'Save'))
+                    ->setUseButtonTag(true)
+                    ->addExtraClass('ss-ui-action-constructive btn-primary font-icon-save')
+                    ->setAttribute('data-icon', 'accept')
+                    ->setAttribute('data-action-type', 'default')
+            );
 
             $form = new Form(
                 $this,
@@ -95,11 +107,22 @@ class GridFieldExpandableForm_ItemRequest extends RequestHandler
 
         $form->IncludeFormTag = false;
 
+        // Ensure form is made readonly if editing not allowed
+        if (!$record->canEdit()) {
+            $form->makeReadonly();
+        }
+
         return $form;
     }
 
     public function doSave($data, $form)
     {
+        // Check permission
+        if (!$this->record->canEdit()) {
+            $controller = $this->getToplevelController();
+            return $controller->httpError(403);
+        }
+
         try {
             $form->saveInto($this->record);
             $this->record->write();
