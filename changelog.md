@@ -25,3 +25,7 @@ Updated styling of save button on expandable form
 ## 2.0.2
 
 Ensure that record permissions are honorted on editing and saving via expandable form 
+
+## 2.0.3
+
+Fix checkboxes in expandable forms always being ticked
