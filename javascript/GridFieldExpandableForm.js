@@ -88,6 +88,11 @@
 				var data = [];
 				var prefix = $(this).getGridField().attr('data-name') + '_GFEF_Detail_';
 				$('input[name], select[name], textarea[name]', container).each(function(){
+                    // checkboxes should be ignored if not ticked
+					if ($(this).is(':checkbox') && !$(this).is(':checked')) {
+						return;
+					}
+                    
 					if($(this).attr('name').substr(0, prefix.length) == prefix) {
 						data.push({
 							name: $(this).attr('name').substr(prefix.length),
