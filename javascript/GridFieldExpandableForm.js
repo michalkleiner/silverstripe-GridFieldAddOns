@@ -23,11 +23,6 @@
 			expand: function() {
 				var id = $(this).attr('data-id');
 				$('.EditFormContainer[data-id=' + id + '] .EditFormDiv', $(this).getGridField())
-					.css({
-						display: 'none',
-						height: 'auto',
-						overflow: 'visible'
-					})
 					.slideDown('fast');
 			},
 			collapse: function(callback) {

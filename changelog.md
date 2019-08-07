@@ -29,3 +29,7 @@ Ensure that record permissions are honorted on editing and saving via expandable
 ## 2.0.3
 
 Fix checkboxes in expandable forms always being ticked
+
+## 2.0.4
+
+Remove hard coded JS from expandable forms
