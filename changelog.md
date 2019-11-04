@@ -33,3 +33,7 @@ Fix checkboxes in expandable forms always being ticked
 ## 2.0.4
 
 Remove hard coded JS from expandable forms
+
+## 2.0.5
+
+Ensure that react added loading screen is removed (if not done automatically)
