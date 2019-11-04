@@ -51,8 +51,11 @@
 				$(this).after(formrow);
 
 				$(this).closest('form').addClass('loading');
-				$('.EditFormDiv', formrow).load(url, function(){
+				$('.EditFormDiv', formrow).load(url, function() {
 					$(this).closest('form').removeClass('loading');
+
+					// Hacky way of forcefully removing loading screen (if react fails to match/remove)
+					$('.cms-loading-container').remove();
 
 					// replace fieldnames to avoid collision with fields of the main form with the same name
 					var prefix = $(this).getGridField().attr('data-name') + '_GFEF_Detail_';
@@ -107,6 +110,9 @@
 					} else {
 						$(this).closest('form').removeClass('loading');
 					}
+
+					// Hacky way of forcefully removing loading screen (if react fails to match/remove)
+					$('.cms-loading-container').remove();
 				});
 
 				return false;
