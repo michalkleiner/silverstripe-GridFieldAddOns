@@ -5,8 +5,8 @@ GridFieldRecordHighlighter highlights records in a GridField. A lot of people lo
 Currently there are three states:
 
 - nothing to highlight
-- notice/highlight indicated by a blue 'i'
-- alert/error/warning indicated by a red exclamation mark
+- `info` indicated by a blue 'i'
+- `alert` indicated by a red exclamation mark
 
 These indicators are displayed in their own column. On mouseover they show the message that was returned on inspection.
 
@@ -27,6 +27,13 @@ The component can use properties or methods of the records to retrieve a value t
 
 ## Code Example
 
+	class Bar extends DataObject {
+		static $db = array(
+			'Title' => 'Varchar',
+			'Enabled' => 'Boolean'
+		);
+	}
+
 	class Foo extends DataObject {
 
 		static $db = array('Title' => 'Varchar');
@@ -38,7 +45,9 @@ The component can use properties or methods of the records to retrieve a value t
 		function getCMSFields() {
 			$fields = parent::getCMSFields();
 			if($field = $fields->dataFieldByName('Bars')) {
+
 				$alerts = array(
+					// Highlight the row if the Title of the Bar object is 'Bar'
 					'Title' => array(
 						'comparator' => 'equal',
 						'patterns' => array(
@@ -48,6 +57,16 @@ The component can use properties or methods of the records to retrieve a value t
 							),
 						),
 					),
+					// Highlight the row if the Enabled property of the Bar object is false
+					'Enabled' => array(
+					  'comparator' => 'equal',
+						'patterns' => array(
+							0 => array(
+								'status' => 'alert',
+								'message' => 'Bar is disabled'
+							),
+						),
+					)
 				);
 				$field->getConfig()->addComponent(new GridFieldRecordHighlighter($alerts));
 			}
