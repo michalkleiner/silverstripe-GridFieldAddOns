@@ -110,7 +110,7 @@ class GridFieldUserColumns extends ViewableData implements GridField_ColumnProvi
     /**
      * Look for and add any needed field labels (used mostly for extra_summary_fields)
      * and return new array
-     * 
+     *
      * @return array
      */
     protected function addFieldLabels($fields)

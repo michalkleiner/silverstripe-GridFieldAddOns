@@ -8,7 +8,7 @@ use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 /**
  * Allow DataObjects to specify a custom GridFieldDetailForm_ItemRequest class
  * via SilverStripe config.
- * 
+ *
  * This class will then be used to build the GridFieldDetailForm automatically
  */
 class GridFieldDetailFormExtension extends Extension

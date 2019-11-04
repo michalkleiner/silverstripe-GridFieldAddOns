@@ -48,7 +48,7 @@ class GridFieldColumnDateFormatter implements GridField_ColumnProvider
      *
      * @param GridField $gridField Current gridfield
      * @param array     $columns   List reference of all column names.
-     * 
+     *
      * @return null
      */
     public function augmentColumns($grid_field, &$columns)
@@ -69,7 +69,6 @@ class GridFieldColumnDateFormatter implements GridField_ColumnProvider
             // If we are working with a set of data columns, look for
             // date/datetime columns
             if ($is_columns && method_exists($component, "getDisplayFields")) {
-                
                 $display_fields = $component->getDisplayFields($grid_field);
                 foreach ($fields as $field) {
                     $display_fields = $this->changeKeys(
@@ -121,7 +120,7 @@ class GridFieldColumnDateFormatter implements GridField_ColumnProvider
         foreach ($config->getComponents() as $component) {
             // If we are working with a set of data columns, look for
             // date/datetime columns
-            if ($this->isColumnProvider($component) && method_exists($component, "getDisplayFields")) {                
+            if ($this->isColumnProvider($component) && method_exists($component, "getDisplayFields")) {
                 foreach ($component->getDisplayFields($grid_field) as $k => $v) {
                     $field = $obj->dbObject($k);
                     if (isset($field) && $field instanceof DBDate) {
@@ -200,7 +199,7 @@ class GridFieldColumnDateFormatter implements GridField_ColumnProvider
      * Get type for this instance
      *
      * @return string
-     */ 
+     */
     public function getDateType()
     {
         if (!empty($this->date_type)) {
@@ -216,7 +215,7 @@ class GridFieldColumnDateFormatter implements GridField_ColumnProvider
      * @param string $date_type for this instance
      *
      * @return self
-     */ 
+     */
     public function setDateType(string $date_type)
     {
         $this->date_type = $date_type;
