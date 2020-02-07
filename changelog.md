@@ -37,3 +37,7 @@ Remove hard coded JS from expandable forms
 ## 2.0.5
 
 Ensure that react added loading screen is removed (if not done automatically)
+
+## 2.0.6
+
+Allow `GridFieldColumnDateFormatter` to merge date sorting with any custom sort options
