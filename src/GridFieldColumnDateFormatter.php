@@ -88,12 +88,19 @@ class GridFieldColumnDateFormatter implements GridField_ColumnProvider
 
             // If we are working with sortable headers, look for
             // date/datetime columns
-            if ($is_header && count($component->getFieldSorting()) == 0) {
+            if ($is_header) {
                 $sort_fields = [];
                 foreach ($fields as $field) {
                     $sort_fields[$field["Column"]] = $field["Sort"];
                 }
-                $component->setFieldSorting($sort_fields);
+
+                // Merge new sort options, retaining any existing defined custom sorting
+                $component->setFieldSorting(
+                    array_merge(
+                        $sort_fields,
+                        $component->getFieldSorting()
+                    )
+                );
             }
         }
     }
